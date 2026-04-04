@@ -38,10 +38,12 @@ class Doctor{
     
     static totalDoctors = 0;
 
-    constructor(doctorId, name, specialization){
+    constructor(doctorId, name, specialization, availableSlots) {
         this.doctorId = doctorId;
         this.name = name;
         this.specialization = specialization;
+        this.availableSlots = availableSlots;
+
         Doctor.totalDoctors++;
     }
 
@@ -94,8 +96,8 @@ class Appointment {
 }
 
 
-const doctor1 = new Doctor("DOC001", "Adaeze Okafor", "Cardiology", 2);
-const doctor2 = new Doctor("DOC002", "Emeka Nwosu", "General Practice", 1);
+const doctor1 = new Doctor("DOC001", "Adaeze Okafor", "Cardiology", 10);
+const doctor2 = new Doctor("DOC002", "Emeka Nwosu", "General Practice", 5);
 
 const patient1 = new Patient("PAT001", "Chukwuemeka Eze", 34);
 const patient2 = new Patient("PAT002", "Ngozi Adeyemi", 28);
@@ -113,9 +115,8 @@ patient1.bookAppointment(appt1, doctor1);
 patient2.bookAppointment(appt2, doctor1);
 patient3.bookAppointment(appt3, doctor2);
 
-patient2.cancelAppointment();
+// patient2.cancelAppointment();
 
-console.log(`\nTotal patients: ${Patient.getTotalPatients()}`);
-console.log(`Total doctors: ${Doctor.getTotalDoctors()}`);
+// console.log(`\nTotal patients: ${Patient.getTotalPatients()}`);
+// console.log(`Total doctors: ${Doctor.getTotalDoctors()}`);
 console.log(`Active appointments: ${Appointment.getTotalBooked()}`);
-console.log(`Doctor ${doctor1.name} has ${doctor1.availableSlots} available slots.`);
