@@ -4,21 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Quiz Questions</title>
 </head>
 <body>
     <div id="container">
-
-        <h2 id="progress"></h2>
-        <div>
-            <p id="questions"></p>
-            <div class="answer-buttons"></div>
-          
-            
+        <!-- Header -->
+        <div class="quiz-header">
+            <h1 class="quiz-title">🧠 Quiz Challenge</h1>
+            <p class="quiz-subtitle">Test your knowledge!</p>
         </div>
 
+        <!-- Progress Section -->
+        <div class="progress-section">
+            <div class="progress-info">
+                <span id="progress-text">Question 1 of 5</span>
+                <span id="score-text">Score: 0</span>
+            </div>
+            <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Question Section -->
+        <div id="question-section">
+            <p id="questions" class="question-text"></p>
+            <div class="answer-buttons" id="answer-buttons"></div>
+        </div>
+
+        <!-- Results Section (hidden by default) -->
+        <div id="results-section" class="results-hidden">
+            <div class="results-icon" id="results-icon"></div>
+            <h2 class="results-title">Quiz Completed!</h2>
+            <p class="results-score" id="results-score"></p>
+            <p class="results-message" id="results-message"></p>
+            <div class="results-bar-track">
+                <div class="results-bar-fill" id="results-bar"></div>
+            </div>
+            <button class="btn-restart" id="btn-restart">🔄 Play Again</button>
+        </div>
     </div>
-    
+
     <script src="quiz.js" defer></script>
 </body>
 </html>
