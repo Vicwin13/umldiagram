@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telephone — Observer Pattern Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>📱 Telephone</h1>
+      <p class="subtitle">Observer Pattern Demo</p>
+    </header>
+
+    <div class="main-grid">
+      <!-- Left Column: Phone Dialer -->
+      <section class="dialer-section">
+        <h2>Dialer</h2>
+
+        <!-- Phone number display -->
+        <div class="phone-display">
+          <input
+            type="text"
+            id="phoneInput"
+            placeholder="Enter phone number"
+            maxlength="15"
+          />
+        </div>
+
+        <!-- Keypad -->
+        <div class="keypad">
+          <button class="key" data-value="1">1</button>
+          <button class="key" data-value="2">2</button>
+          <button class="key" data-value="3">3</button>
+          <button class="key" data-value="4">4</button>
+          <button class="key" data-value="5">5</button>
+          <button class="key" data-value="6">6</button>
+          <button class="key" data-value="7">7</button>
+          <button class="key" data-value="8">8</button>
+          <button class="key" data-value="9">9</button>
+          <button class="key key-clear" data-value="clear">✕</button>
+          <button class="key" data-value="0">0</button>
+          <button class="key key-backspace" data-value="backspace">⌫</button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-add" id="btnAdd">Add Number</button>
+          <button class="btn btn-dial" id="btnDial">📞 Dial</button>
+          <button class="btn btn-remove" id="btnRemove">Remove</button>
+        </div>
+      </section>
+
+      <!-- Right Column -->
+      <div class="right-column">
+        <!-- Phone Book -->
+        <section class="phonebook-section">
+          <h2>📒 Phone Book</h2>
+          <ul id="phoneBookList" class="phone-book-list">
+            <li class="empty-state">No phone numbers added yet.</li>
+          </ul>
+        </section>
+
+        <!-- Activity Log -->
+        <section class="log-section">
+          <h2>📋 Activity Log <button class="btn-clear-log" id="btnClearLog">Clear</button></h2>
+          <div id="activityLog" class="activity-log">
+            <p class="empty-state">No activity yet. Add a number and dial it!</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Observer Info -->
+    <footer>
+      <div class="observer-badges">
+        <span class="badge badge-observer-1">Observer 1: Prints phone number</span>
+        <span class="badge badge-observer-2">Observer 2: Prints "Now Dialling ..."</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
