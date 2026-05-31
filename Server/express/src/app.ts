@@ -1,86 +1,47 @@
-import express, { NextFunction, Request, Response } from 'express';
+import { AppError } from './errors/errors';
+import connectDB from "./config/db";
+import dotenv from "dotenv";
+import express from "express";
+import { loggerMiddleware } from "./middleware/logger.middleware";
+import masterRouter from "./routes/index.routes";
 
-import {AppError} from './errors';
-import NoteController from './controller';
-import connectDB from './db';
+// import cors from "cors"; // Disabled: not needed for Postman testing (no frontend yet)
+
+
+// import helmet from "helmet"; // Disabled: not needed for Postman testing (no frontend yet)
+
+
+
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-connectDB();
-
-
+// Register middleware
+// app.use(helmet()); // Disabled: enable when adding a frontend
+// app.use(cors());   // Disabled: enable when adding a frontend
 app.use(express.json());
+app.use(loggerMiddleware);
 
-// Routes
+// Register routes
+app.use('/api', masterRouter);
 
-app.get('/api/notes', async(req:Request, res: Response, next: NextFunction) => {
-    try{
-        const notes = await NoteController.getNotes();
-        res.status(200).json(notes);
-    }catch(err){
-        next(err)
-    }
-});
-
-app.post('/api/notes', async(req: Request, res: Response, next: NextFunction) => {
-    try{
-        const newNote = await NoteController.createNote(req.body);
-        res.status(201).json(newNote);
-    }catch(err){
-        next(err);
-    }
-})
-
-app.get('/api/notes/:id', async(req: Request, res: Response, next: NextFunction) => {
-    try{
-        const noteId = String(req.params.id);
-        const note = await NoteController.getNote(noteId);
-        res.status(200).json(note);
-    }catch(err){
-        next(err);
-    }
-})
-
-app.put('/api/notes/:id', async(req: Request, res: Response, next: NextFunction) => {
-    try{
-        const noteId = String(req.params.id);
-        const updateNote = await NoteController.updateNote(noteId, req.body);
-        res.status(200).json(updateNote);
-    }catch(err){
-        next(err);
-    }
-})
-
-app.delete('/api/notes/:id', async(req: Request, res: Response, next: NextFunction) => {
-    try{
-        const noteId = String(req.params.id);
-        await NoteController.deleteNote(noteId);
-        res.status(204).end();
-    }catch(err){
-        next(err);
-    }
-})
-
-app.patch('/api/notes/:id', async(req: Request, res: Response, next: NextFunction) => {
-    try{
-        const noteId = String(req.params.id);
-        const updateNote = await NoteController.updateNote(noteId, req.body);
-        res.status(200).json(updateNote);
-    }catch(err){
-        next(err);
-    }
-})
-
-app.use((err: AppError, req: Request, res: Response) => {
-    if(err instanceof AppError) {
-        res.status(err.statusCode).json({error: err.message});
+// Error handler middleware (must be last, with 4 params)
+app.use((err: AppError, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (err instanceof AppError) {
+        res.status(err.statusCode).json({
+            message: err.message,
+        });
         return;
     }
 
-    res.status(500).json({error: 'Internal Server Error'});
+    console.error(err);
+    res.status(500).json({
+        message: "Internal Server Error",
+    });
 });
 
-app.listen(PORT, () => {
-    console.log(`TypeScript ExpressServer running at http://localhost:${PORT}/`);
+// Start server and connect to database
+app.listen(process.env.PORT, async () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+    await connectDB();
 });

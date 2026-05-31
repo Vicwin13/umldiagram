@@ -1,8 +1,9 @@
-import { Document, Schema, model } from "mongoose";
+import { Document, Schema, Types, model } from "mongoose";
 
 export interface INote extends Document {
   title: string;
   content: string;
+  category: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,6 +18,10 @@ const noteSchema = new Schema<INote>(
       type: String,
       required: [true, "Content is required"],
     },
+    category: {
+      type: String,
+      required: [true, "Category is required"],
+    }
   },
   {
     timestamps: true,
