@@ -4,6 +4,7 @@ export interface INote extends Document {
   title: string;
   content: string;
   category: string;
+  userId: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -21,6 +22,11 @@ const noteSchema = new Schema<INote>(
     category: {
       type: String,
       required: [true, "Category is required"],
+    },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "UserModel",
+      required: true,
     }
   },
   {
@@ -29,3 +35,5 @@ const noteSchema = new Schema<INote>(
 );
 
 export const Note = model<INote>("Note", noteSchema);
+
+export default Note;

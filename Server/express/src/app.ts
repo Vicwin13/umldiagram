@@ -1,4 +1,5 @@
 import { AppError } from './errors/errors';
+import authRoutes from "./routes/auth.routes";
 import connectDB from "./config/db";
 import dotenv from "dotenv";
 import express from "express";
@@ -22,7 +23,10 @@ const app = express();
 app.use(express.json());
 app.use(loggerMiddleware);
 
-// Register routes
+// Register routes (public - no auth required)
+app.use('/api/auth', authRoutes);
+
+// Register routes (protected - auth required)
 app.use('/api', masterRouter);
 
 // Error handler middleware (must be last, with 4 params)
